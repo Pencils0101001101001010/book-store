@@ -8,15 +8,23 @@ const Navbar = () => {
       <div className="container px-4 mx-auto relative text-sm">
         <div className="flex justify-between items-center">
           <div className="flex items-center flex-shrink-0">
-            <img className="h-10 w-10 mr-2 rounded-lg" src={logo} alt="open24" />
+            <img
+              className="h-10 w-10 mr-2 rounded-lg"
+              src={logo}
+              alt="open24"
+            />
             <span className="text-xl tracking-tight items-start">
-             <Link to={"/"}>Book Right</Link> 
+              <Link to={"/"}>Book Right</Link>
             </span>
           </div>
           <div className="flex items-center gap-1">
-             
             <div>
-              <Link to={"/user/login"} className=" hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-500 bg-gradient-to-r from-sky-500 py-2 px-3 rounded-md space-x-1  to-green-500">Login</Link>
+              <Link
+                to={"/user/login"}
+                className=" hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-500 bg-gradient-to-r from-sky-500 py-2 px-3 rounded-md space-x-1  to-green-500"
+              >
+                Login
+              </Link>
             </div>
           </div>
         </div>
