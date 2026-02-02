@@ -1,7 +1,7 @@
 // Importing Express framework
 import express from "express";
 // Importing MongoDB connection string and port from config file
-import { mongoDB, PORT } from "./config.js";
+
 // Importing Mongoose to interact with MongoDB
 import mongoose from "mongoose";
 // Importing routes for books and users
@@ -9,11 +9,12 @@ import bookRoute from "./routes/bookRoute.js";
 import userRoute from "./routes/user.js";
 // Middleware for parsing cookies
 import cookieParser from "cookie-parser";
-// import dotenv from 'dotenv'
-// dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 // Importing CORS to handle cross-origin requests
 import cors from "cors";
+import { PORT } from "./config.js";
 
 const app = express();
 
@@ -50,7 +51,7 @@ app.use("/user", userRoute);
 
 // Connecting to MongoDB using Mongoose
 mongoose
-  .connect(mongoDB)
+  .connect(process.env.mongoDB)
   .then(() => {
     console.log("Connected to MongoDB");
     // Starting the server once DB connection is successful

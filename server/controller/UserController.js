@@ -2,8 +2,10 @@ import { User } from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
-import { SECRET } from "../config.js";
+
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
 
 //* signup
 export const signupUser = async (request, response) => {
@@ -62,7 +64,9 @@ export const loginUser = async (request, response) => {
     if (!isPasswordValid) {
       return response.status(400).json({ message: "Invalid password." });
     }
-    const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "1d" });
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+      expiresIn: "1d",
+    });
     //*httpOnly is so that no one can access your toke with javaScript.
     response.cookie("token", token, { httpOnly: true, maxAge: 360000 });
     return response
@@ -84,7 +88,9 @@ export const forgotPassword = async (request, response) => {
     if (!user || !user.email) {
       return response.status(401).send({ message: "Email not registered." });
     }
-    const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: "5m" });
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+      expiresIn: "5m",
+    });
     //*httpOnly is so that no one can access your toke with javaScript.
     response.cookie("token", token, { httpOnly: true, maxAge: 360000 });
     response
@@ -122,7 +128,7 @@ export const resetPassword = async (request, response) => {
   const { token } = request.params;
   const { password } = request.body;
   try {
-    const decoded = await jwt.verify(token, SECRET);
+    const decoded = await jwt.verify(token, process.env.SECRET);
     const id = decoded.id;
     const hashPassword = await bcrypt.hash(password, 10);
     await User.findByIdAndUpdate({ _id: id }, { password: hashPassword });

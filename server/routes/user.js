@@ -4,11 +4,11 @@ import {
   loginUser,
   forgotPassword,
   resetPassword,
-  
 } from "../controller/UserController.js";
-import { SECRET } from "../config.js";
-import jwt from "jsonwebtoken";
 
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 const router = express.Router();
 
 //*signup route
@@ -20,34 +20,28 @@ router.post("/forgot-password", forgotPassword);
 
 router.post("/reset-password/:token", resetPassword);
 
-
-
-
 //* verify User
- const verifyUser = async (request, response, next) => {
-    const token = request.cookies.token;
-     try {
-        if (!token) {
-       return response.json({status: false, message: "no token"})
-      }
-      const decoded = await jwt.verify(token, SECRET);
-      next()  
-     } catch (error) {
-       return response.json(error);
-     } 
-     
-   }
+const verifyUser = async (request, response, next) => {
+  const token = request.cookies.token;
+  try {
+    if (!token) {
+      return response.json({ status: false, message: "no token" });
+    }
+    const decoded = await jwt.verify(token, process.env.SECRET);
+    next();
+  } catch (error) {
+    return response.json(error);
+  }
+};
 
 router.get("/verify", verifyUser, (request, response) => {
-    response.json({status: true, message: "valid token"})
+  response.json({ status: true, message: "valid token" });
 });
 
 //*logout
- router.get("/logout", (request, response) => {
-    response.clearCookie("token");
-    response.json({status: true, message: "logged out"})
+router.get("/logout", (request, response) => {
+  response.clearCookie("token");
+  response.json({ status: true, message: "logged out" });
 });
-
-
 
 export default router;
