@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../components/Spinner";
-import { Link,   useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import BooksTable from "../components/home/BooksTable";
 import BookCard from "../components/home/BooksCard.jsx";
@@ -11,17 +11,19 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showType, setShowType] = useState("table");
   const navigate = useNavigate();
- axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get('http://localhost:5555/user/verify')
-    .then(response => {
-        if (response.data.status){
-            setIsLoading(false);
-        }else{
-            navigate("/")
-        }
-    })
-  })
+    axios.get("http://localhost:5555/user/verify").then((response) => {
+      if (response.data.status === false) {
+        alert("Login to view Dashboard");
+      }
+      if (response.data.status) {
+        setIsLoading(false);
+      } else {
+        navigate("/");
+      }
+    });
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -46,10 +48,7 @@ const Dashboard = () => {
         >
           Table
         </button>
-
-      |
-
-
+        |
         <button
           className="hover:text-sky-400  hover:underline border-l- px-5 py-1 rounded-lg"
           onClick={() => setShowType("card")}
@@ -65,7 +64,6 @@ const Dashboard = () => {
       </div>
       {isLoading ? (
         <Spinner />
-        
       ) : showType === "table" ? (
         <BooksTable books={books} />
       ) : (
