@@ -1,7 +1,7 @@
 // Importing Mongoose to define a schema for users
 import mongoose from "mongoose";
 // Importing bcrypt for password hashing
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // Defining the schema for a User collection
 const userSchema = mongoose.Schema(
