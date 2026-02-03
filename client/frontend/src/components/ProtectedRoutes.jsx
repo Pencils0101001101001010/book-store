@@ -13,7 +13,9 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     // Call backend to verify token validity
     axios
-      .get("http://localhost:5555/user/verify", { withCredentials: true })
+      .get(`${import.meta.env.VITE_BACKENDPORTHOLL}/user/verify`, {
+        withCredentials: true,
+      })
       // withCredentials ensures cookies (where JWT is stored) are sent with the request
       .then((res) => {
         setIsAuth(res.data.status); // true if token is valid

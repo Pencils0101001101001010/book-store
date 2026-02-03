@@ -17,36 +17,36 @@ const SignUp = () => {
   const { enqueueSnackbar } = useSnackbar();
   // const { signup, error, isLoading} = useSignup();
 
-
   const handleCreateUser = async (e) => {
     e.preventDefault();
     const newUser = {
       name,
       email,
-      password 
+      password,
     };
-    
-    
+
     setLoading(true);
-      // await signup(email, password)
+    // await signup(email, password)
     axios
-      .post("http://localhost:5555/user/signup", newUser) 
+      .post(`${import.meta.env.VITE_BACKENDPORTHOLL}/user/signup`, newUser)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("user created successfully", { variant: "success" });
-        console.log("user", newUser)
-        if(newUser){
+        console.log("user", newUser);
+        if (newUser) {
           navigate("/user/login");
-        } }).catch((error) => {
-          if (!name) {
-            enqueueSnackbar(`Check name`, { variant: "error" });
-          }
-          if (!email) {
-            enqueueSnackbar(`Check email`, { variant: "error" });
-          }
-          if (!password) {
-            enqueueSnackbar(`Check password`, { variant: "error" });
-          }
+        }
+      })
+      .catch((error) => {
+        if (!name) {
+          enqueueSnackbar(`Check name`, { variant: "error" });
+        }
+        if (!email) {
+          enqueueSnackbar(`Check email`, { variant: "error" });
+        }
+        if (!password) {
+          enqueueSnackbar(`Check password`, { variant: "error" });
+        }
         console.log(error);
 
         enqueueSnackbar(`Failed to sign up. `, { variant: "error" });
@@ -97,12 +97,14 @@ const SignUp = () => {
           Signup
         </button>
         <div className="items-center ml-16 ">
-           <p>Already have an account?    <Link
-           className="text-sky-400 hover:text-white"
-        to={'/user/login'}
-        >Login</Link></p>
+          <p>
+            Already have an account?{" "}
+            <Link className="text-sky-400 hover:text-white" to={"/user/login"}>
+              Login
+            </Link>
+          </p>
         </div>
-       
+
         {/* {error && <div className="bg-yellow-400">{error}</div>} */}
       </div>
     </div>

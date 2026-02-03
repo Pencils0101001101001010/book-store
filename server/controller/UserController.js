@@ -99,16 +99,16 @@ export const forgotPassword = async (request, response) => {
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "sjuniversalpaint@gmail.com",
-        pass: "iwjz hnop wrzn egyf",
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     var mailOptions = {
-      from: "sjuniversalpaint@gmail.com",
+      from: process.env.EMAIL_USER,
       to: email,
       subject: "Reset Password",
-      text: `http://localhost:5173/user/resetPassword/${token}`,
+      text: `${process.env.FRONTENDPORT}/user/resetPassword/${token}`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

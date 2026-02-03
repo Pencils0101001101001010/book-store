@@ -12,7 +12,7 @@ const ShowBooks = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:5555/books/${id}`)
+      .get(`${import.meta.env.VITE_BACKENDPORTHOLL}/books/${id}`)
       .then((response) => {
         setBook(response.data);
         setIsLoading(false);
@@ -51,7 +51,9 @@ const ShowBooks = () => {
             <span>{new Date(book.createdAt).toString()}</span>
           </div>
           <div className="my-4">
-            <span className="text-xl mr-4 text-gray-500">Last Update Time:</span>
+            <span className="text-xl mr-4 text-gray-500">
+              Last Update Time:
+            </span>
             <span>{new Date(book.updatedAt).toString()}</span>
           </div>
         </div>

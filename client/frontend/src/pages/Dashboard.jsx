@@ -16,19 +16,21 @@ const Dashboard = () => {
   // const { enqueueSnackbar } = useSnackbar;
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get("http://localhost:5555/user/verify").then((response) => {
-      if (response.data.status) {
-        setIsLoading(false);
-      } else {
-        navigate("/");
-      }
-    });
+    axios
+      .get(`${import.meta.env.VITE_BACKENDPORTHOLL}/user/verify`)
+      .then((response) => {
+        if (response.data.status) {
+          setIsLoading(false);
+        } else {
+          navigate("/");
+        }
+      });
   });
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5555/books")
+      .get(`${import.meta.env.VITE_BACKENDPORTHOLL}/books`)
       .then((response) => {
         setBooks(response.data.data);
         setIsLoading(false);

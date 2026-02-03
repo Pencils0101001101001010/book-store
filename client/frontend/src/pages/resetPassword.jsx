@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const {token} = useParams()
+  const { token } = useParams();
   const navigate = useNavigate();
 
   const handelSendClick = (e) => {
@@ -15,14 +15,17 @@ const ResetPassword = () => {
     setLoading(false);
 
     axios
-      .post("http://localhost:5555/user/reset-password/"+token, {
-        password,
-      })
-      .then(response => {
+      .post(
+        `${import.meta.env.VITE_BACKENDPORTHOLL}/user/reset-password/` + token,
+        {
+          password,
+        },
+      )
+      .then((response) => {
         if (response) {
           navigate("/user/login");
         }
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch((err) => {
         alert("Error", { variant: "error" });
@@ -33,7 +36,7 @@ const ResetPassword = () => {
   return (
     <div className="p-4">
       <BackButtonLogin />
-      
+
       <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[400px] p-4 mx-auto">
         {loading ? <Spinner /> : ""}
         <h1 className="text-4xl my-4 font-semibold ">Reset Password</h1>

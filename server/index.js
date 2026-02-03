@@ -24,7 +24,7 @@ app.use(express.json());
 // first way to use cors:
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // Allow requests from frontend running on localhost:5173
+    origin: [process.env.FRONTENDPORT], // Allow requests from frontend running on localhost:5173
     credentials: true, // Allow cookies and authentication headers
   }),
 );

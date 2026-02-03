@@ -2,42 +2,39 @@ import { useState } from "react";
 import BackButtonLogin from "../components/home/BackButtonLogin";
 import Spinner from "../components/Spinner";
 import axios from "axios";
-import {   useNavigate } from "react-router-dom";
- 
+import { useNavigate } from "react-router-dom";
 
 const DontKnowKeyWord = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-   
 
   const handelSendClick = (e) => {
     e.preventDefault();
     setLoading(false);
 
     axios
-      .post("http://localhost:5555/user/forgot-password", {
+      .post(`${import.meta.env.VITE_BACKENDPORTHOLL}/user/forgot-password`, {
         email,
       })
-      .then((response) => { 
-          if (response) {
-              alert("Check your email for reset password link.", { variant: "success"  })
-               navigate("/user/login")
-               }
-             
-           })
-          .catch((err) => {
-           alert("Error", { variant: "error" });
-            console.log(err);
+      .then((response) => {
+        if (response) {
+          alert("Check your email for reset password link.", {
+            variant: "success",
           });
-    
-      
+          navigate("/user/login");
+        }
+      })
+      .catch((err) => {
+        alert("Error", { variant: "error" });
+        console.log(err);
+      });
   };
 
   return (
     <div className="p-4">
       <BackButtonLogin />
-        {loading ? <Spinner /> : ""}
+      {loading ? <Spinner /> : ""}
       <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[400px] p-4 mx-auto">
         {/* {loading ? <Spinner /> : ""} */}
         <h1 className="text-4xl my-4 font-semibold ">Reset Password</h1>
@@ -54,8 +51,8 @@ const DontKnowKeyWord = () => {
 
         <button
           className="p-2 bg-gradient-to-tr hover:to-blue-100 from-sky-400 to-green-600 m-8 rounded-xl mb-1"
-           onClick={handelSendClick}
-           disabled={loading}
+          onClick={handelSendClick}
+          disabled={loading}
         >
           Send
         </button>
