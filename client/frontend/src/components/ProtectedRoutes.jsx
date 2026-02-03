@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { enqueueSnackbar } from "notistack";
 
 const ProtectedRoute = ({ children }) => {
   // State to track whether the user is authenticated
@@ -19,6 +20,11 @@ const ProtectedRoute = ({ children }) => {
       // withCredentials ensures cookies (where JWT is stored) are sent with the request
       .then((res) => {
         setIsAuth(res.data.status); // true if token is valid
+        if (res.data.status === false) {
+          return enqueueSnackbar("Login to make changes", {
+            variant: "warning",
+          });
+        }
       })
       .catch(() => setIsAuth(false)); // false if verification fails
   }, []);

@@ -11,15 +11,21 @@ import DontKnowKeyWord from "./pages/DontKnowKeyWord.jsx";
 import ResetPassword from "./pages/resetPassword.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoutes.jsx";
+import { useState } from "react";
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <div>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div>
         <Routes>
           <Route path="/user/signup" element={<SignUp />} />
-          <Route path="/user/login" element={<Login />} />
+          <Route
+            path="/user/login"
+            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          />
+
           <Route path="/forgotPassword" element={<DontKnowKeyWord />} />
           <Route
             path="/user/resetPassword/:token"

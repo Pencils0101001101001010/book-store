@@ -1,8 +1,21 @@
 // import { Link } from "react-router-dom"
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
+// import { useEffect } from "react";
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
+import PropTypes from "prop-types";
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const handleLogout = () => {
+    axios
+      .get(`${import.meta.env.VITE_BACKENDPORTHOLL}/user/logout`, {
+        withCredentials: true,
+      })
+      .then(() => setIsLoggedIn(false));
+    enqueueSnackbar("Logged out successfully", { variant: "info" });
+  };
+
   return (
     <nav className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-neutral-700/80">
       <div className="container px-4 mx-auto relative text-sm">
@@ -17,14 +30,31 @@ const Navbar = () => {
               <Link to={"/"}>Book Right</Link>
             </span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-4">
             <div>
               <Link
-                to={"/user/login"}
-                className=" hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-500 bg-gradient-to-r from-sky-500 py-2 px-3 rounded-md space-x-1  to-green-500"
+                to="/Dashboard"
+                className="text-sky-400 hover:text-white items-center flex justify-center"
               >
-                Login
+                Dashboard
               </Link>
+            </div>
+            <div>
+              {isLoggedIn ? (
+                <button
+                  className="text-red-400 hover:text-white"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  className="text-sky-400 hover:text-white"
+                  to={"/user/login"}
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -34,6 +64,12 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+Navbar.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  setIsLoggedIn: PropTypes.bool.isRequired,
+};
+
 // <nav>
 //   <div className="w-full h-16 items-center flex justify-between bg-sky-500 shadow-2xl  ">
 //     <Link

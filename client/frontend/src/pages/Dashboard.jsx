@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../components/Spinner";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import BooksTable from "../components/home/BooksTable";
 import BookCard from "../components/home/BooksCard.jsx";
@@ -12,20 +12,9 @@ const Dashboard = () => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showType, setShowType] = useState("table");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const { enqueueSnackbar } = useSnackbar;
   axios.defaults.withCredentials = true;
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKENDPORTHOLL}/user/verify`)
-      .then((response) => {
-        if (response.data.status) {
-          setIsLoading(false);
-        } else {
-          navigate("/");
-        }
-      });
-  });
 
   useEffect(() => {
     setIsLoading(true);
