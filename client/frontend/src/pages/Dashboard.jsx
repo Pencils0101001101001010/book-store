@@ -6,17 +6,17 @@ import { MdOutlineAddBox } from "react-icons/md";
 import BooksTable from "../components/home/BooksTable";
 import BookCard from "../components/home/BooksCard.jsx";
 
+// import { useSnackbar } from "notistack";
+
 const Dashboard = () => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showType, setShowType] = useState("table");
   const navigate = useNavigate();
+  // const { enqueueSnackbar } = useSnackbar;
   axios.defaults.withCredentials = true;
   useEffect(() => {
     axios.get("http://localhost:5555/user/verify").then((response) => {
-      if (response.data.status === false) {
-        alert("Login to view Dashboard");
-      }
       if (response.data.status) {
         setIsLoading(false);
       } else {

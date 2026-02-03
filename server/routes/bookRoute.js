@@ -2,12 +2,13 @@
 import express from "express";
 // Importing the Book model to interact with MongoDB
 import { Book } from "../models/bookModel.js";
+import { verifyUser } from "./user.js";
 
 // Creating a router object to define routes separately from the main app
 const router = express.Router();
 
 //Route for Save a new Book
-router.post("/", async (request, response) => {
+router.post("/", verifyUser, async (request, response) => {
   try {
     // Creating a new book object from request body
     const newBook = {
@@ -73,7 +74,7 @@ router.get("/:id", async (request, response) => {
 });
 
 //update book
-router.put("/:id", async (request, response) => {
+router.put("/:id", verifyUser, async (request, response) => {
   try {
     // Validating that all required fields are present
     if (
@@ -109,7 +110,7 @@ router.put("/:id", async (request, response) => {
 });
 
 // Delete a book by ID
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", verifyUser, async (request, response) => {
   try {
     const { id } = request.params;
 

@@ -32,7 +32,7 @@ router.post("/reset-password/:token", resetPassword);
 
 //* verify User
 // Middleware function to check if a user has a valid JWT token stored in cookies
-const verifyUser = async (request, response, next) => {
+export const verifyUser = async (request, response, next) => {
   const token = request.cookies.token; // Extract token from cookies
   try {
     if (!token) {
